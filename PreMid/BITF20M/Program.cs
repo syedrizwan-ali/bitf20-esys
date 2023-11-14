@@ -38,9 +38,9 @@ namespace BITF20M
             //}
             //Console.WriteLine("out of block");
 
-            //var third = new Third();
+            var third = new Third();
 
-            var inst = new ChildOne();
+            //var inst = new ChildOne();
         }
     }
 
