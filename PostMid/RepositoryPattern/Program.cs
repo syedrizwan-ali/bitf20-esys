@@ -1,8 +1,10 @@
 ﻿using Ninject;
+using RepositoryPattern.Common.Infrastructure;
 using RepositoryPattern.Interfaces;
 using RepositoryPattern.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,10 +16,10 @@ namespace RepositoryPattern
     {
         static void Main(string[] args)
         {
-            IKernel _kernel = new StandardKernel();
-            _kernel.Load(Assembly.GetExecutingAssembly());
+            new ReferenceFinder();
 
-            var userRepo = _kernel.Get<IRepository<User>>();
+            var repo = ReferenceFinder.Find<IRepository<User>>();
+            repo.Get();
         }
     }
 }
