@@ -20,7 +20,10 @@
       <h3>PostMid</h3>
       <ul>
         <li><h4>Repository Pattern</h4> <p>Repository Pattern, DI using NInject</p></li>
-        <li><h4>MVCFramework</h4></li>
+        <li><h4>MVCFramework</h4>
+          <p>For reference MVC works like this:</p>
+          <img src="https://github.com/syedrizwan-ali/bitf20-esys/blob/main/PostMid/MVCFramework/Documentation/MVC%20Request%20Flow.png" width="600">
+        </li>
       </ul>
     </li>
   </ul>
