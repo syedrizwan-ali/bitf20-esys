@@ -29,6 +29,9 @@ namespace RepositoryPattern.Common.Infrastructure
                 Bind<IRepository<Role>>().To<RoleRepositoryEF>();
                 Bind<IRepository<Permission>>().To<PermissionRepositoryEF>();
             }
+
+            Bind<IVehicle>().To<Ship>();
+            Bind<IShowroom>().To<Showroom>();
         }
     }
 }
