@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MVCApplication.DataAccessLayer.Infrastructures;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,68 +13,108 @@ namespace MVCApplication.DataAccessLayer.Repositories
         DbEntities entities = new DbEntities();
 
         public List<Student> Get()
-        {
-            return entities.Students.ToList();
+        {   
+            try
+            {
+                return entities.Students.ToList();
+            }
+            catch(Exception e)
+            {
+                throw ExceptionManager.Manage(e);
+            }
         }
 
         public Student Get(long id)
         {
-            if (id <= 0)
-                throw new Exception("Invalid Identifier");
+            try
+            {
+                if (id <= 0)
+                    throw new Exception("Invalid Identifier");
 
-            return entities.Students.Where(x => x.ID == id).FirstOrDefault();
+                var result = entities.Students.Where(x => x.ID == id).FirstOrDefault();
+                if (ReferenceEquals(result, null))
+                {
+                    throw new Exception($"No row found with given identifier {id}");
+                }
+                return result;
+            }
+            catch(Exception e)
+            {
+                throw ExceptionManager.Manage(e);
+            }
         }
 
         public long Save(Student student)
         {
-            if (ReferenceEquals(student, null))
-                throw new Exception("No content received");
-
-            student.CreatedBy = "admin";
-            student.CreatedOn = DateTime.UtcNow;
-
-            entities.Students.Add(student);
-            var rowsWritten = entities.SaveChanges();
-
-            if (rowsWritten > 0)
+            try
             {
-                var lastId = entities.Students.Max(x => x.ID);
-                return lastId;
+                if (ReferenceEquals(student, null))
+                    throw new Exception("No content received");
+
+                student.CreatedBy = "admin";
+                student.CreatedOn = DateTime.UtcNow;
+
+                entities.Students.Add(student);
+                var rowsWritten = entities.SaveChanges();
+
+                if (rowsWritten > 0)
+                {
+                    var lastId = entities.Students.Max(x => x.ID);
+                    return lastId;
+                }
+                else
+                {
+                    return -1;
+                }
             }
-            else
+            catch(Exception e)
             {
-                return -1;
+                throw ExceptionManager.Manage(e);
             }
         }
 
         public Student Update(Student student)
         {
-            if (ReferenceEquals(student, null))
-                throw new Exception("No content received");
+            try
+            {
+                if (ReferenceEquals(student, null))
+                    throw new Exception("No content received");
 
-            if (student.ID <= 0)
-                throw new Exception("Invalid Identifier");
+                if (student.ID <= 0)
+                    throw new Exception("Invalid Identifier");
 
-            var dbEntity = entities.Students.Where(x => x.ID == student.ID).First();
+                var dbEntity = entities.Students.Where(x => x.ID == student.ID).First();
 
-            dbEntity.ModifiedBy = "admin";
-            dbEntity.ModifiedOn = DateTime.UtcNow;
-            dbEntity.Name = student.Name;
-            dbEntity.RollNumber = student.RollNumber;
+                dbEntity.ModifiedBy = "admin";
+                dbEntity.ModifiedOn = DateTime.UtcNow;
+                dbEntity.Name = student.Name;
+                dbEntity.RollNumber = student.RollNumber;
 
-            var rowsWritten = entities.SaveChanges();
+                var rowsWritten = entities.SaveChanges();
 
-            return entities.Students.Where(x => x.ID == student.ID).FirstOrDefault();
+                return entities.Students.Where(x => x.ID == student.ID).FirstOrDefault();
+            }
+            catch(Exception e)
+            {
+                throw ExceptionManager.Manage(e);
+            }
         }
 
         public bool Delete(long id)
         {
-            if (id <= 0)
-                throw new Exception("Invalid Identifier");
+            try
+            {
+                if (id <= 0)
+                    throw new Exception("Invalid Identifier");
 
-            var dbEntity = entities.Students.Where(x => x.ID == id).First();
-            entities.Students.Remove(dbEntity);
-            return entities.SaveChanges() > 0;
+                var dbEntity = entities.Students.Where(x => x.ID == id).First();
+                entities.Students.Remove(dbEntity);
+                return entities.SaveChanges() > 0;
+            }
+            catch(Exception e)
+            {
+                throw ExceptionManager.Manage(e);
+            }
         }
     }
 }
