@@ -23,6 +23,11 @@ namespace MVCApplication.Controllers
         // GET: Student
         public ActionResult Index()
         {
+            if (Session["Email"] == null)
+            {
+                return Redirect("/User/Login");
+            }
+
             var data = studentRepository.Get();
             var vms = studentVMMapper.Map(data);
             return View(vms);
@@ -30,6 +35,11 @@ namespace MVCApplication.Controllers
 
         public ActionResult Create(StudentVM student)
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
             if (!ReferenceEquals(student, null) && !string.IsNullOrWhiteSpace(student.Name) && !string.IsNullOrWhiteSpace(student.RollNumber))
             {
                 var entity = studentVMMapper.Map(student);
@@ -50,6 +60,11 @@ namespace MVCApplication.Controllers
     
         public ActionResult Edit(long id, StudentVM student)
         {
+            if (Session["Email"] == null)
+            {
+                return Redirect("/User/Login");
+            }
+
             if (!ReferenceEquals(student, null) && student.ID > 0 && !string.IsNullOrWhiteSpace(student.Name) && !string.IsNullOrWhiteSpace(student.RollNumber))
             {
                 var entity = studentVMMapper.Map(student);
@@ -69,6 +84,11 @@ namespace MVCApplication.Controllers
 
         public ActionResult Details(long id)
         {
+            if (Session["Email"] == null)
+            {
+                return Redirect("/User/Login");
+            }
+
             if (id > 0)
             {
                 var entity = studentRepository.Get(id);
@@ -80,6 +100,11 @@ namespace MVCApplication.Controllers
 
         public ActionResult Delete(long id)
         {
+            if (Session["Email"] == null)
+            {
+                return Redirect("/User/Login");
+            }
+
             studentRepository.Delete(id);
             return RedirectToAction("Index");
         }

@@ -122,6 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -130,9 +131,12 @@
     <Compile Include="Infrastructures\Mappers\AuditInfoVMMapper.cs" />
     <Compile Include="Infrastructures\Mappers\IdentityVMMapper.cs" />
     <Compile Include="Mappers\StudentVMMapper.cs" />
+    <Compile Include="Mappers\UserVMMapper.cs" />
     <Compile Include="Models\AuditInformationVM.cs" />
     <Compile Include="Models\IdentityVM.cs" />
+    <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Models\StudentVM.cs" />
+    <Compile Include="Models\UserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +179,9 @@
     <Content Include="Views\Student\Create.cshtml" />
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Student\Details.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\List.cshtml" />
+    <Content Include="Views\User\UpdatePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
